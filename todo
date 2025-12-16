@@ -1,0 +1,10 @@
+base.sql
+    - créer base
+    - créer table vehicule(id, immatriculation, cout_journalier)
+    - créer table livreur(id, nom, salaire_journalieréa)
+    - créer table colis(id, poids)
+    - créer table livraison(id, id_livreur, id_vehicule, id_colis, id_adresse, entrepot_depart, date_livraison, statut[en attente, livré,annulé])
+    - créer table zone_livraison(id, nom)
+    - créer table adresse (id, id_zone)
+    - insérer des données dans les tables
+
