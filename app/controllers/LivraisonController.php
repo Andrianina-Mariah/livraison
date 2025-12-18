@@ -24,45 +24,64 @@ class LivraisonController
     public function create(): void
 {
     // Récupérer les listes depuis le DAO
-    $colisList = $this->dao->getAllColis();          // méthode à créer dans DAO
     $chauffeurList = $this->dao->getAllChauffeurs(); // méthode à créer dans DAO
     $vehiculeList = $this->dao->getAllVehicules();   // méthode à créer dans DAO
-
-    // Passer les listes à la vue
+    $typeColisList = $this->dao->getAllTypeColis();
+    $entrepotList = $this->dao->getAllEntrepots();
+    $adresseList = $this->dao->getAllAdresse();
     Flight::render('livraison_create', [
-        'colisList' => $colisList,
+        'typeColisList' => $typeColisList,
         'chauffeurList' => $chauffeurList,
-        'vehiculeList' => $vehiculeList
+        'vehiculeList' => $vehiculeList,
+        'entrepotList' => $entrepotList,
+        'adresseList' => $adresseList
     ]);
+
 }
 
     // Sauvegarder une nouvelle livraison
     public function store(): void
     {
         $data = Flight::request()->data->getData();
-    
-        // // Afficher les IDs reçus pour debug
-        // var_dump(
-        //     $data['id_colis'] ?? null,
-        //     $data['id_livreur'] ?? null,
-        //     $data['id_vehicule'] ?? null
-        // );
-        // die(); // stoppe le script pour voir le résultat
-    
-        // Créer un objet Livraison à partir des données reçues
+
+        // 1️⃣ récupérer le prix/kg du type
+        $stmt = $this->dao->getDb()->prepare(
+            "SELECT prix_kg FROM poste_type_colis WHERE id = :id"
+        );
+        $stmt->execute(['id' => $data['id_type_colis']]);
+        $prixKg = $stmt->fetchColumn();
+
+        // 2️⃣ calcul prix total
+        $prixTotal = $data['poids'] * $prixKg;
+
+        // 3️⃣ créer le colis
+        $stmt = $this->dao->getDb()->prepare(
+            "INSERT INTO poste_colis (libelle, poids, id_type_colis, prix_total)
+            VALUES (:libelle, :poids, :id_type, :prix)"
+        );
+        $stmt->execute([
+            'libelle' => $data['libelle'],
+            'poids' => $data['poids'],
+            'id_type' => $data['id_type_colis'],
+            'prix' => $prixTotal
+        ]);
+
+        $idColis = $this->dao->getDb()->lastInsertId();
+
+        // 4️⃣ créer la livraison
         $livraison = new Livraison(
             null,
-            $data['id_colis'],
-            $data['id_livreur'],
-            $data['id_vehicule'],
-            $data['id_entrepot'],
-            $data['id_adresse'],
+            $data['chauffeur_id'],
+            $data['vehicule_id'],
+            $idColis,
+            $data['adresse_depart'],
+            $data['adresse_arrivee'],
             $data['statut'],
             $data['date_livraison']
         );
-    
+
         $this->dao->createLivraison($livraison);
-    
+
         Flight::redirect('/livraisons');
     }
 

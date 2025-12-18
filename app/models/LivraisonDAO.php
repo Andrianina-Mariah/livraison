@@ -14,6 +14,11 @@ class LivraisonDAO
         // On récupère directement l'instance PDO depuis Connexion.php
         $this->db = Connexion::getConn();
     }
+    
+    public function getDb(): PDO
+    {
+        return $this->db;
+    }
 
     // Créer une nouvelle livraison
     /**
@@ -164,4 +169,29 @@ class LivraisonDAO
         $stmt = $this->db->query("SELECT id, immatriculation FROM poste_vehicule ORDER BY immatriculation ASC");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getAllTypeColis()
+    {
+        $stmt = $this->db->query(
+            "SELECT id, nom, prix_kg FROM poste_type_colis ORDER BY nom ASC"
+        );
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getAllEntrepots()
+    {
+        $stmt = $this->db->query(
+            "SELECT id, nom FROM poste_entrepot ORDER BY nom ASC"
+        );
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getAlladresse()
+    {
+        $stmt = $this->db->query(
+            "SELECT id, nom FROM poste_adresse ORDER BY nom ASC"
+        );
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+ 
 }

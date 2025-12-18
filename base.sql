@@ -132,6 +132,8 @@ SELECT
     v.immatriculation AS immatriculation,
     e.nom AS nom_entrepot,
     a.nom AS nom_adresse,
+    l.id_adresse,
+    l.id_entrepot,
     l.date_livraison,
     l.statut,
     l.montantRecette,

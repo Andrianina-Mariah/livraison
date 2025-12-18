@@ -14,7 +14,7 @@
         <div class="container">
             <a class="navbar-brand fw-bold" href="/">🚚 LivraisonPro</a>
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="/">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="/">Accueil</a></li>
                 <li class="nav-item"><a class="nav-link active" href="/livraisons">Livraisons</a></li>
                 <li class="nav-item"><a class="nav-link" href="/benefices">Bénéfices</a></li>
             </ul>

@@ -30,13 +30,25 @@
         <form method="POST" action="/livraison/store">
             <!-- Colis -->
             <div class="mb-3">
-                <label for="colis_id" class="form-label">Colis</label>
-                <select class="form-select" id="colis_id" name="colis_id" required>
-                    <option value="">-- Choisir un genre de colis --</option>
-                    <?php foreach ($colisList as $colis): ?>
-                        <option value="<?= $colis['id'] ?>"><?= $colis['libelle'] ?></option>
+                <label for="id_type_colis" class="form-label">Type de colis</label>
+                <select class="form-select" id="id_type_colis" name="id_type_colis" required>
+                    <option value="">-- Choisir un type de colis --</option>
+                    <?php foreach ($typeColisList as $type): ?>
+                        <option value="<?= $type['id'] ?>">
+                            <?= $type['nom'] ?> (<?= $type['prix_kg'] ?> Ar/kg)
+                        </option>
                     <?php endforeach; ?>
                 </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="libelle" class="form-label">Libellé du colis</label>
+                <input type="text" class="form-control" id="libelle" name="libelle" placeholder="Libellle" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="poids" class="form-label">Poids du colis</label>
+                <input type="number" class="form-control" id="poids" name="poids" placeholder="poids du colis" required>
             </div>
 
             <!-- Chauffeur -->
@@ -64,13 +76,23 @@
             <!-- Adresse départ -->
             <div class="mb-3">
                 <label for="adresse_depart" class="form-label">Adresse de départ</label>
-                <input type="text" class="form-control" id="adresse_depart" name="adresse_depart" placeholder="Adresse complète" required>
+                <select name="adresse_depart" id="adresse_depart" class="form-select">
+                    <option value="">-- Choisir un entrepot --</option>
+                    <?php foreach ($entrepotList as $entrepot): ?>
+                        <option value="<?= $entrepot['id'] ?>"><?= $entrepot['nom'] ?></option>
+                    <?php endforeach; ?>                
+                </select>
             </div>
 
             <!-- Adresse arrivée -->
             <div class="mb-3">
                 <label for="adresse_arrivee" class="form-label">Adresse de destination</label>
-                <input type="text" class="form-control" id="adresse_arrivee" name="adresse_arrivee" placeholder="Adresse complète" required>
+                <select name="adresse_arrivee" id="adresse_arrivee" class="form-select">
+                    <option value="">-- Choisir une adresse --</option>
+                    <?php foreach ($adresseList as $adresse): ?>
+                        <option value="<?= $adresse['id'] ?>"><?= $adresse['nom'] ?></option>
+                    <?php endforeach; ?>                
+                </select>
             </div>
 
             <!-- Date livraison -->
