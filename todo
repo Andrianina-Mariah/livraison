@@ -27,8 +27,10 @@ livraison (ETU4190)
             - Mettre à jour le statut
 
     - view 
-        - Livraison_list.php
+        - livraison_list.php
             - Liste tout les livraisons
             - Ajouter bouton supprimer/modifier 
-        - Livraison_create.php
+        - livraison_create.php
             - Formulaire pour création de livraison
+        - edit.php
+            - Page pour modifier la livraison

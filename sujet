@@ -1,0 +1,38 @@
+16/12/2025
+Examen – Décembre 2025
+Par groupe (binôme)
+Objectifs
+Conception de base de données, Requêtes SQL , Applications web
+
+Technique
+PHP Flight mvc – Mysql ou Postgres
+Créer un Todo list  ( les tâches seront assignées pour chaque binôme)
+
+Compréhension
+Une société de livraison possède plusieurs véhicules, livreurs et zones de livraison.
+Un livreur est affecté à un véhicule par livraison.
+Chaque livraison correspond à :
+	•	un colis,
+	•	une adresse de départ (entrepôt de la société, 1 seul entrepôt),
+	•	une adresse de destination,
+	•	un statut (en attente, livré, annulé).
+
+Livreur = Chauffeur
+
+Votre tâche est de créer la base de données, d’insérer des données de test, et d’effectuer les requêtes SQL nécessaires.
+
+Travail à faire
+Créer les tables et données nécessaires qui permettent de gérer les fonctionnalités :
+Gestion des livraisons (Création , Statut)
+les colis correspondants
+Paramètre par livraison
+coût de revient
+voiture ( à saisir par livraison)
+chauffeur (salaire par livraison déjà paramétré), chaque chauffeur peut avoir son salaire
+chiffre d’affaire
+colis par kg ( montant gagné par kg )
+Créer directement les autres données nécessaires dans la table
+Page pour afficher les bénéfices par période (jour, mois, année)
+
+
+

@@ -206,3 +206,48 @@ SELECT
 FROM poste_livraison l
 JOIN poste_livreur ch ON l.id_livreur = ch.id
 GROUP BY ch.id, ch.nom;
+
+INSERT INTO poste_colis (poids, prix_kg, libelle)
+VALUES (25, 3000, 'Fruits'),
+       (50, 5000, 'Ciment');
+
+
+INSERT INTO poste_livraison (id_livreur, id_vehicule, id_colis, id_adresse, id_entrepot, date_livraison, statut)
+VALUES (1, 2, 3, 2, 1,'2025-12-18', 'en attente'),
+       (2, 1, 1, 3, 3,'2025-12-18', 'annule');
+
+CREATE TABLE poste_type_colis (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(100) NOT NULL,
+    prix_kg DECIMAL(10,2) NOT NULL CHECK (prix_kg >= 0)
+);
+
+INSERT INTO poste_type_colis (nom, prix_kg) VALUES
+('Aliment périssable', 3000),
+('Aliment non périssable', 2000),
+('Textile', 2500),
+('Matériel', 4000),
+('Matériel de construction', 5000),
+('Produit fragile', 4500);
+
+
+ALTER TABLE poste_colis
+DROP COLUMN prix_kg;
+
+ALTER TABLE poste_colis
+MODIFY poids DECIMAL(10,2) NOT NULL CHECK (poids > 0);
+
+ALTER TABLE poste_colis
+ADD COLUMN id_type_colis INT;
+
+ALTER TABLE poste_colis
+ADD CONSTRAINT fk_poste_colis_type
+FOREIGN KEY (id_type_colis)
+REFERENCES poste_type_colis(id);
+
+ALTER TABLE poste_colis
+ADD COLUMN prix_total DECIMAL(10,2);
+
+UPDATE poste_colis
+SET libelle = 'Colis standard'
+WHERE libelle IS NULL;
