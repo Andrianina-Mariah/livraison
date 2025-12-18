@@ -2,11 +2,13 @@
 namespace app\controllers;
 
 use app\models\Benefice;
+use app\models\Connexion;
 
 class BeneficeController {
-    
+
     public function index() {
-        $beneficeModel = new Benefice(\Flight::db());
+        $db = Connexion::getConn();   // ✅ connexion directe PDO
+        $beneficeModel = new Benefice($db);
 
         $byDay   = $beneficeModel->getBeneficesByDay();
         $byMonth = $beneficeModel->getBeneficesByMonth();
@@ -18,8 +20,4 @@ class BeneficeController {
             'byYear'  => $byYear
         ]);
     }
-
-    // Optionnel : si tu veux un filtre par date précise plus tard
-    // public function filtre() { ... }
 }
-?>

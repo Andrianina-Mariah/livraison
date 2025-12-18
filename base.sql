@@ -59,31 +59,37 @@ CREATE TABLE poste_livraison (
 );
 
 DROP VIEW IF EXISTS vue_benefices;
+
 CREATE VIEW vue_benefices AS
 SELECT
     l.date_livraison,
+
     COUNT(DISTINCT l.id_livreur) AS nb_livreurs,
     COUNT(DISTINCT l.id_vehicule) AS nb_vehicules_actifs,
-    SUM(c.poids * c.prix_kg) AS total_recette_colis,
-    
-    -- Coût total des livreurs (1 salaire par livreur par jour)
-    SUM(DISTINCT li.salaire_journalier) AS total_salaires_livreurs,
-    
-    -- Coût total des véhicules (1 coût journalier par véhicule utilisé dans la journée)
-    SUM(DISTINCT v.cout_journalier) AS total_couts_vehicules_carburant,
-    
-    -- Bénéfice net du jour
-    (SUM(c.poids * c.prix_kg) 
-     - SUM(DISTINCT li.salaire_journalier) 
-     - SUM(DISTINCT v.cout_journalier)
+
+    -- Recette totale
+    SUM(c.poids * tc.prix_kg) AS total_recette_colis,
+
+    -- Coût des livreurs
+    SUM(li.salaire_journalier) AS total_salaires_livreurs,
+
+    -- Coût des véhicules
+    SUM(v.cout_journalier) AS total_couts_vehicules_carburant,
+
+    -- Bénéfice net
+    (
+        SUM(c.poids * tc.prix_kg)
+        - SUM(li.salaire_journalier)
+        - SUM(v.cout_journalier)
     ) AS benefice_journalier
 
 FROM poste_livraison l
 JOIN poste_colis c ON l.id_colis = c.id
+JOIN poste_type_colis tc ON c.id_type_colis = tc.id
 JOIN poste_livreur li ON l.id_livreur = li.id
 JOIN poste_vehicule v ON l.id_vehicule = v.id
+
 WHERE l.statut = 'livre'
-  AND v.estActif = TRUE  -- optionnel : ignorer les véhicules désactivés
 GROUP BY l.date_livraison
 ORDER BY l.date_livraison DESC;
 
