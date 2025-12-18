@@ -1,4 +1,4 @@
-base.sql
+base.sql(ETU3896-ETU4190)
     - créer base
     - créer table vehicule(id, immatriculation, cout_journalier)
     - créer table livreur(id, nom, salaire_journalieréa)
@@ -7,4 +7,28 @@ base.sql
     - créer table zone_livraison(id, nom)
     - créer table adresse (id, id_zone)
     - insérer des données dans les tables
+    - creer table trajet 
 
+livraison (ETU4190)
+    - model
+        - Livraison.php
+            - getters et setters pour pouvoir créer et modifier un objet Livraison
+            - Constructeur pour créer un objet Livraison
+        - LivraisonDAO.php 
+            - fonction crud (create, update, delete)
+            - fonction qui récupère toutes les livraisons avec infos complètes
+            - fonction qui affiche Livraisons par chauffeur
+
+    - controller
+        - LivraisonController.php
+            - Récupérer les listes depuis le DAO
+            - Passer les listes à la vue
+            - Afficher le formulaire de modification
+            - Mettre à jour le statut
+
+    - view 
+        - Livraison_list.php
+            - Liste tout les livraisons
+            - Ajouter bouton supprimer/modifier 
+        - Livraison_create.php
+            - Formulaire pour création de livraison
